@@ -9,7 +9,7 @@ void yyerror(char *);
 
 [0-9]+ { yylval = atoi(yytext); return INT; }
 
-\n { return EOL; }
+[\n] { return EOL; }
 
 [+] { return SUM; }
 
