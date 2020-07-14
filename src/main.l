@@ -7,25 +7,26 @@ void yyerror(char *);
 
 %%
 
-[0-9]+ { yylval = atoi(yytext); return INT; }
+[0-9]+ { yylval = atoi(yytext); return INT; }	//identificar inteiros
 
-[\n] { return EOL; }
 
-[+] { return SUM; }
+[\n] { return EOL; }	//identificar fim de linha
 
-[*] { return MUL; }
+[+] { return SUM; }	//identificar soma
+	
+[*] { return MUL; }	//identificar multiplicacao	
 
-[\/] { return DIV; }
+[\/] { return DIV; }	//identificar divisao
 
-(\^) { return POW; }
+(\^) { return POW; }	//identificar exponenciacao
+	
+\( { return '('; }	//identificar parenteses aberto
 
-\( { return '('; }
+\) { return ')'; }	//identificar parenteses fechado
 
-\) { return ')'; }
+[[:space:]]+ ;	//rejeitar espacos
 
-[[:space:]]+ ;
-
-. ;
+. ;	//rejeitar caracteres desconhecidos
 
 %%
 
