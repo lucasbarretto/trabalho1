@@ -4,6 +4,8 @@
 
 void yyerror(char *c);
 int yylex(void);
+int i=0;
+
 %}
 
 %token INT SUM MUL POW DIV '(' ')' EOL //tokens terminais
@@ -16,7 +18,7 @@ int yylex(void);
 %%
 
 S:
-  S E EOL { printf("POP A\n"); }
+  S E EOL { printf("POP A\n"); i=0;}
   |
   ;
 
@@ -25,7 +27,7 @@ E:
   | E SUM E { printf("POP B\nPOP A\nADD A,B\nPUSH A\n"); }	//operacao de soma
   | E MUL E { printf("POP B\nPOP A\nMUL B\nPUSH A\n"); }	//operacao de multiplicacao
   | E DIV E { printf("POP B\nPOP A\nDIV B\nPUSH A\n"); }	//operacao de divisao
-  | E POW E { printf("POP C\nPOP B\nMOV A,1\n.loop:\n\tMUL B\n\tDEC C\n\tJNZ .loop\nPUSH A\n"); }	//operacao de exponenciacao
+  | E POW E { printf("POP C\nPOP B\nMOV A,1\nCMP C,0\nJZ .end%d\n.loop%d:\n\tMUL B\n\tDEC C\n\tJNZ .loop%d\n.end%d:\nPUSH A\n",i,i,i,i); i++; } //operacao de exponenciacao
   | '(' E ')' { }	//considerar os parenteses em operacoes
   ;
 
