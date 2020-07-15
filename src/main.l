@@ -9,8 +9,7 @@ void yyerror(char *);
 
 [0-9]+ { yylval = atoi(yytext); return INT; }	//identificar inteiros
 
-
-[\n] { return EOL; }	//identificar fim de linha
+\n { return EOL; }	//identificar fim de linha
 
 [+] { return SUM; }	//identificar soma
 	
@@ -24,10 +23,9 @@ void yyerror(char *);
 
 \) { return ')'; }	//identificar parenteses fechado
 
-[[:space:]]+ ;	//rejeitar espacos
+[ \t]+ ;
 
-. ;	//rejeitar caracteres desconhecidos
-
+. ;
 %%
 
 int yywrap() {

@@ -1,7 +1,6 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 void yyerror(char *c);
 int yylex(void);
@@ -22,12 +21,12 @@ S:
   ;
 
 E:
-  INT { $$ = $1; printf("PUSH %d\n", $1); }
-  | E SUM E { $$ = $1+$3; printf("POP B\nPOP A\nADD A,B\nPUSH A\n"); }	//operacao de soma
-  | E MUL E { $$ = $1*$3; printf("POP B\nPOP A\nMUL B\nPUSH A\n"); }	//operacao de multiplicacao
-  | E DIV E { $$ = $1/$3; printf("POP B\nPOP A\nDIV B\nPUSH A\n"); }	//operacao de divisao
-  | E POW E { $$ = pow($1,$3); printf("POP C\nPOP B\nMOV A,1\n"); int i; for(i=0; i < $3; i++){ printf("MUL B\n"); } printf("PUSH A\n"); }	//operacao de exponenciacao
-  | '(' E ')' { $$ = $2; }	//considerar os parenteses em operacoes
+  INT { printf("PUSH %d\n", $1); } // coloca os inteiros na pilha
+  | E SUM E { printf("POP B\nPOP A\nADD A,B\nPUSH A\n"); }	//operacao de soma
+  | E MUL E { printf("POP B\nPOP A\nMUL B\nPUSH A\n"); }	//operacao de multiplicacao
+  | E DIV E { printf("POP B\nPOP A\nDIV B\nPUSH A\n"); }	//operacao de divisao
+  | E POW E { printf("POP C\nPOP B\nMOV A,1\n.loop:\n\tMUL B\n\tDEC C\n\tJNZ .loop\nPUSH A\n"); }	//operacao de exponenciacao
+  | '(' E ')' { }	//considerar os parenteses em operacoes
   ;
 
 %%
